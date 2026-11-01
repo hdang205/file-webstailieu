@@ -1,73 +1,83 @@
-# Welcome to your Lovable project
+# Tài Liệu Học Tập (File Study Nest)
 
-## Project info
+Nền tảng chia sẻ, tra cứu và tải xuống tài liệu mã nguồn (HTML, CSS, PHP) cho cộng đồng lập trình viên.
 
-**URL**: https://lovable.dev/projects/8be79bce-a87d-4a43-8220-1975ce8c9b4e
+## 📌 Tổng quan dự án
 
-## How can I edit this code?
+- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui, Lucide React, next-themes.
+- **Backend / Database**: Supabase (PostgreSQL, Supabase Auth, Row Level Security, RPC Functions).
+- **Trạng thái**: Đã được audit toàn diện, tối ưu bundle, vá lỗi bảo mật/RLS, bổ sung dark mode, preview mã nguồn và responsive hoàn chỉnh.
 
-There are several ways of editing your application.
+## 🚀 Tính năng chính
 
-**Use Lovable**
+1. **Khám phá & Tìm kiếm tài liệu**:
+   - Tra cứu nhanh theo từ khóa, lọc theo định dạng (HTML, CSS, PHP).
+   - Xem trước mã nguồn trực tiếp trên trình duyệt kèm nút sao chép (copy code).
+   - Tải tệp mã nguồn nguyên bản.
+   - Thống kê lượt tải an toàn (không bị chặn bởi RLS).
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8be79bce-a87d-4a43-8220-1975ce8c9b4e) and start prompting.
+2. **Đóng góp & Tải lên tài liệu**:
+   - Tải lên tệp trực tiếp (`.html`, `.css`, `.php`) với chức năng kéo thả (drag-and-drop) tự động nhận diện định dạng và điền nội dung.
+   - Quản lý thẻ tag linh hoạt.
+   - Kiểm duyệt tài liệu trước khi xuất bản ra cộng đồng.
 
-Changes made via Lovable will be committed automatically to this repo.
+3. **Phân quyền & Quản trị (Admin Dashboard)**:
+   - Bảo vệ route với `ProtectedRoute` (ngăn truy cập trái phép và hạn chế hiện tượng flash layout).
+   - Phê duyệt / Từ chối tài liệu tải lên.
+   - Xóa tài liệu với hộp thoại xác nhận an toàn (`AlertDialog`).
+   - Giám sát danh sách người dùng và thống kê hệ thống theo thời gian thực.
 
-**Use your preferred IDE**
+4. **Giao diện & Trải nghiệm (UI/UX)**:
+   - Hỗ trợ giao diện Sáng / Tối / Tự động theo hệ thống (`next-themes`).
+   - Thiết kế chuẩn Responsive cho mọi kích thước màn hình (Mobile Drawer / Desktop Navigation).
+   - Code-splitting phân tách các trang tải theo yêu cầu, giảm dung lượng bundle tải ban đầu.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## ⚙️ Cài đặt và chạy môi trường cục bộ (Local Development)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Yêu cầu
+- Node.js >= 18.0.0
+- npm hoặc bun
 
-Follow these steps:
+### Các bước thực hiện
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+1. **Clone repository và cài đặt dependencies**:
+   ```bash
+   git clone <REPO_URL>
+   cd file-webstailieu
+   npm install
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2. **Cấu hình biến môi trường**:
+   Sao chép hoặc cấu hình tệp `.env`:
+   ```env
+   VITE_SUPABASE_PROJECT_ID="your_supabase_project_id"
+   VITE_SUPABASE_PUBLISHABLE_KEY="your_supabase_anon_key"
+   VITE_SUPABASE_URL="https://your-project.supabase.co"
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+3. **Chạy server phát triển**:
+   ```bash
+   npm run dev
+   ```
+   Ứng dụng sẽ khả dụng tại: `http://localhost:8080`
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+4. **Kiểm tra cú pháp và build production**:
+   ```bash
+   # Kiểm tra lint
+   npm run lint
 
-**Edit a file directly in GitHub**
+   # Kiểm tra TypeScript type
+   npx tsc --noEmit
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+   # Build đóng gói sản phẩm
+   npm run build
+   ```
 
-**Use GitHub Codespaces**
+## 🗄️ Cấu trúc Database & Migration
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Hệ thống sử dụng các migration trong thư mục `supabase/migrations/`:
+- `20250920065708_931879ff-5376-44de-b802-221fb7539f99.sql`: Schema cơ sở dữ liệu ban đầu (bảng `profiles`, `documents`, enum và triggers).
+- `20261101120000_fix_documents_and_downloads.sql`: Bổ sung foreign key ràng buộc giữa `documents` và `profiles`, hàm RPC `increment_document_download` an toàn, và các chỉ mục (indexes) tối ưu truy vấn.
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/8be79bce-a87d-4a43-8220-1975ce8c9b4e) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🔗 Liên kết Lovable
+- **Dự án**: [Lovable Project](https://lovable.dev/projects/8be79bce-a87d-4a43-8220-1975ce8c9b4e)
